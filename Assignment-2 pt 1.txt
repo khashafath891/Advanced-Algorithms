@@ -1,0 +1,42 @@
+#include <iostream>
+using namespace std;
+ 
+int main()
+{
+    cout<<"Representation of sparse matrix using Arrays will be in the form - \nRow:\nColumn:\nValue:\n\n";
+    int sparseMatrix[4][5] ={{0 , 0 , 3 , 0 , 4 },{0 , 0 , 5 , 7 , 0 },{0 , 0 , 0 , 0 , 0 },{0 , 2 , 6 , 0 , 0 }};
+ 
+    int size = 0;
+    int x , y;
+    
+    for (x = 0; x < 4; x++)
+        for (y = 0; y < 5; y++)
+            if (sparseMatrix[x][y] != 0)
+                size++;
+ 
+    int compactMatrix[3][size];
+ 
+    int z = 0;
+    for (x = 0; x < 4; x++)
+        for (y = 0; y < 5; y++)
+            if (sparseMatrix[x][y] != 0)
+            {
+                compactMatrix[0][z] = x;
+                compactMatrix[1][z] = y;
+                compactMatrix[2][z] = sparseMatrix[x][y];
+                z++;
+            }
+ 
+    for (x=0; x<3; x++)
+    {
+
+        for (y=0; y<size; y++)
+            cout <<" "<< compactMatrix[x][y];
+ 
+        
+        cout <<"\n";
+        
+    }
+    
+    return 0;
+}
