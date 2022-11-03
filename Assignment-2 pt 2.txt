@@ -1,0 +1,79 @@
+#include<iostream>
+using namespace std;
+class Node
+{
+    public:
+    int row, column, value;
+    Node *next;
+    
+};
+void creatingNewNode(Node **i, int rowList, int columnList, int x)
+{
+    Node *temp = *i;
+    Node *j;
+    if (temp == NULL)
+    {
+        temp = new Node();
+        temp->row = rowList;
+        temp->column = columnList;
+        temp->value = x;
+        temp->next = NULL;
+        *i = temp;
+    }
+    else
+    {
+        while (temp->next != NULL)  
+            temp = temp->next;
+        j = new Node();
+        j->row = rowList;
+        j->column = columnList;
+        j->value = x;
+        j->next = NULL;
+        temp->next = j;
+    }
+}
+void printTheList(Node *start)
+{
+    Node *point = start;
+    cout << "Row Node : ";
+    while (point != NULL)
+    {
+        cout << point->row << " ";
+        point = point->next;
+    }
+    cout << endl;
+    cout << "Column Node : ";
+ 
+    point = start;
+    while (point != NULL)
+    {
+        cout << point->column << " ";
+        point = point->next;
+    }
+    cout << endl;
+    cout << "Value Node : ";
+    point = start;
+     
+    while (point != NULL)
+    {
+        cout << point->value << " ";
+        point = point->next;
+    }
+}
+int main()
+{
+    int x , y;
+    int sparseMatrix[4][5] = { { 0 , 0 , 3 , 0 , 4 },{ 0 , 0 , 5 , 7 , 0 },{ 0 , 0 , 0 , 0 , 0 },{ 0 , 2 , 6 , 0 , 0 } };
+    Node *first = NULL;
+    for(x = 0; x < 4; x++)
+    {
+        for(y = 0; y < 5; y++)
+        {
+             
+            if (sparseMatrix[x][y] != 0)
+                creatingNewNode(&first, x, y, sparseMatrix[x][y]);
+        }
+    }
+    printTheList(first);
+    return 0;
+}
