@@ -1,0 +1,86 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define INF 0x3f3f3f3f
+ 
+typedef pair<int, int> iPair;
+ 
+class Graph {
+    int N; 
+ 
+    list<pair<int, int> >* adj;
+ 
+public:
+    Graph(int N); 
+ 
+    void addEdge(int x, int y, int z);
+ 
+     void shortestPath(int s);
+};
+ 
+Graph::Graph(int N)
+{
+    this->N = N;
+    adj = new list<iPair>[N];
+}
+ 
+void Graph::addEdge(int x, int y, int z)
+{
+    adj[x].push_back(make_pair(y, z));
+    adj[y].push_back(make_pair(x, z));
+}
+ 
+void Graph::shortestPath(int src)
+{
+    priority_queue<iPair, vector<iPair>, greater<iPair> >
+        pq;
+ 
+    vector<int> dist(N, INF);
+ 
+    pq.push(make_pair(0, src));
+    dist[src] = 0;
+ 
+    while (!pq.empty()) {
+        int x = pq.top().second;
+        pq.pop();
+ 
+        list<pair<int, int> >::iterator i;
+        for (i = adj[x].begin(); i != adj[x].end(); ++i) {
+        
+            int y = (*i).first;
+            int weight = (*i).second;
+ 
+            if (dist[y] > dist[x] + weight) {
+                dist[y] = dist[x] + weight;
+                pq.push(make_pair(dist[y], y));
+            }
+        }
+    }
+ 
+    printf("Vertex \t\t Distance from Initail Point\n");
+    for (int i = 0; i < N; ++i)
+        printf("%d \t\t %d\n", i, dist[i]);
+}
+ 
+int main()
+{
+    int N = 9;
+    Graph g(N);
+ 
+    g.addEdge(0, 7, 9);
+    g.addEdge(0, 1, 10);
+    g.addEdge(7 ,6 ,7);
+    g.addEdge(7, 1, 8);
+    g.addEdge(1, 2, 11);
+    g.addEdge(6, 2, 1);
+    g.addEdge(2, 3, 3);
+    g.addEdge(6, 5, 6);
+    g.addEdge(5, 4, 5);
+    g.addEdge(5, 3, 4);
+    g.addEdge(3, 4, 2);
+    g.addEdge(4, 8, 1);
+    g.addEdge(3, 8, 3);
+    
+    g.shortestPath(0);
+ 
+    return 0;
+}
